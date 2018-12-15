@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>Login</h1>
-    <button @click="Login">Login</button>
+    <button @click="Login" class="btn">
+      <i class="icon github"></i>
+      Login
+    </button>
     <br>
     <router-link to="/signup">SignUp</router-link>
   </div>

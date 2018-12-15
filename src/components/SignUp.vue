@@ -6,7 +6,7 @@
     <br>
     <router-link to="/login">Login</router-link>
     <br>
-    <span>{{ user !== null ? user : "not login" }}</span>
+    <span>{{ user !== null ? "login" : "not login" }}</span>
   </div>
 </template>
 

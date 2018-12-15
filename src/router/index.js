@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
-import firebase from '../firebase'
+
 
 Vue.use(Router)
 
@@ -36,8 +38,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (firebase.GetCurrentUser() === undefined) {
-    next({ path: '/login' });
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (firebase.auth().currentUser === undefined) {
+      next({ path: '/login' });
+    } else {
+      next();
+    }
   } else {
     next();
   }

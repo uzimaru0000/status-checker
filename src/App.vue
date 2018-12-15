@@ -5,33 +5,28 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "./firebase";
 
 export default {
   name: "App",
   data() {
     return {
-      user: {},
+      user: null,
       initFlag: false
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.OnAuthStateChanged(async user => {
       this.user = user;
       this.initFlag = true;
+
+      if (user !== null && !(await firebase.IsUserRegister(user.email))) {
+        firebase.StoreUserData(user);
+      }
     });
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

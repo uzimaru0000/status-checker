@@ -11,9 +11,14 @@ const config = {
   messagingSenderId: "934149131287"
 };
 
-export default {
+const modules = {
   Init: () => {
     firebase.initializeApp(config);
+    const settings = { timestampsInSnapshots: true };
+    firebase.firestore().settings(settings);
+  },
+  OnAuthStateChanged: callback => {
+    firebase.auth().onAuthStateChanged(callback);
   },
   LoginWithGithub: () => {
     const provider = new firebase.auth.GithubAuthProvider();
@@ -26,7 +31,21 @@ export default {
   Logout: () => {
     return firebase.auth().signOut();
   },
-  GetCurrentUser: () => {
-    return firebase.auth().currentUser;
+  StoreUserData: user => {
+    firebase.firestore().collection('users').doc(user.email).set({
+      imageURL: user.photoURL,
+      name: user.displayName,
+      motivation: 100,
+      comment: "",
+      status: ""
+    });
+  },
+  IsUserRegister: async email => {
+    const user = await firebase.firestore().collection('users').doc(email).get();
+
+    return user.exists;
   }
 };
+
+
+export default modules;
