@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view v-if="initFlag" :user="user"/>
+    <b-loading v-else :is-full-page="true" :active="true"></b-loading>
   </div>
 </template>
 

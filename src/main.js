@@ -4,10 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import firebase from './firebase'
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
 
 Vue.config.productionTip = false
 
 firebase.Init();
+
+Vue.use(Buefy);
 
 /* eslint-disable no-new */
 new Vue({
