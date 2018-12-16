@@ -1,23 +1,33 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <router-view v-if="initFlag" :user="user"/>
+    <b-loading v-else :is-full-page="true" :active="true"></b-loading>
   </div>
 </template>
 
 <script>
+import firebase from "./firebase";
+
 export default {
-  name: 'App'
-}
+  name: "App",
+  data() {
+    return {
+      user: null,
+      initFlag: false
+    };
+  },
+  created() {
+    firebase.OnAuthStateChanged(async user => {
+      this.user = user;
+      this.initFlag = true;
+
+      if (user !== null && !(await firebase.IsUserRegister(user.email))) {
+        firebase.StoreUserData(user);
+      }
+    });
+  }
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
