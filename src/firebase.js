@@ -68,11 +68,17 @@ const modules = {
     });
   },
   JoinGroup: (id, user) => {
-    const ref = firebase.firestore().collection('users').doc(user.email);
-
     return firebase.firestore().collection('group').doc(id).update({
-      members: firebase.firestore.FieldValue.arrayUnion(ref)
+      members: user.email
     });
+  },
+  GetGroup: async id => {
+    const snapshot = await firebase.firestore().collection('group').doc(id).get();
+    if (snapshot.exists) {
+      return snapshot.data();
+    } else {
+      return null;
+    }
   }
 };
 

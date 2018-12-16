@@ -1,0 +1,69 @@
+<template>
+  <section class="section">
+    <div v-if="!isFetching" class="columns">
+      <div class="column is-5">
+        <status-item :user="user"/>
+      </div>
+      <div class="column is-7">
+        <div class="columns is-multiline">
+          <div
+            v-for="member in group.members.filter(x => x.email !== user.email)"
+            :key="member.email"
+            class="column is-full"
+          >
+            <status-item :user="member"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <b-loading v-else :is-full-page="true" :active="true"/>
+  </section>
+</template>
+
+<script>
+import firebase from "../../firebase";
+import StatusItem from "./StatusItem";
+
+export default {
+  name: "Status",
+  props: {
+    id: String,
+    user: Object
+  },
+  data() {
+    return {
+      group: null,
+      isFetching: true
+    };
+  },
+  components: { StatusItem },
+  async created() {
+    this.group = await firebase.GetGroup(this.id);
+
+    console.log(this.group);
+
+    if (!this.group || !this.group.members.some(x => x === this.user.email)) {
+      this.$router.push({ path: "/group" });
+      this.$toast.open({
+        duration: 5000,
+        message: !this.group
+          ? "グループが存在しません"
+          : "グループに所属していません",
+        position: "is-top",
+        type: "is-danger"
+      });
+      return;
+    }
+
+    this.group.members = await Promise.all(
+      this.group.members.map(async key => firebase.GetUser(key))
+    );
+
+    this.isFetching = false;
+  }
+};
+</script>
+
+<style lang="sass" scoped>
+
+</style>

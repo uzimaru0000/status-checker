@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "MyItem",
+  name: "StatusItem",
   props: {
     user: Object
   }
