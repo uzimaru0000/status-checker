@@ -17,8 +17,9 @@ const modules = {
     const settings = { timestampsInSnapshots: true };
     firebase.firestore().settings(settings);
   },
-  OnAuthStateChanged: callback => {
-    firebase.auth().onAuthStateChanged(callback);
+  Instence: () => firebase.firestore(),
+  OnAuthStateChanged: (callback) => {
+    return firebase.auth().onAuthStateChanged(callback);
   },
   LoginWithGithub: () => {
     const provider = new firebase.auth.GithubAuthProvider();
@@ -31,19 +32,47 @@ const modules = {
   Logout: () => {
     return firebase.auth().signOut();
   },
+  IsAuth: () => {
+    return firebase.auth().currentUser ? true : false;
+  },
   StoreUserData: user => {
     firebase.firestore().collection('users').doc(user.email).set({
       imageURL: user.photoURL,
       name: user.displayName,
       motivation: 100,
       comment: "",
-      status: ""
+      status: "",
+      joinedGroups: [],
+      email: user.email
     });
   },
   IsUserRegister: async email => {
     const user = await firebase.firestore().collection('users').doc(email).get();
-
     return user.exists;
+  },
+  GetUser: async email => {
+    const snapshot = await firebase.firestore().collection('users').doc(email).get();
+    if (snapshot.exists) {
+      return snapshot.data();
+    } else {
+      return null;
+    }
+  },
+  UpdateUser: user => {
+    return firebase.firestore().collection('users').doc(user.email).set(user);
+  },
+  CreateGroup: (name, user) => {
+    return firebase.firestore().collection('group').add({
+      name: name,
+      members: [firebase.firestore().collection('users').doc(user.email)]
+    });
+  },
+  JoinGroup: (id, user) => {
+    const ref = firebase.firestore().collection('users').doc(user.email);
+
+    return firebase.firestore().collection('group').doc(id).update({
+      members: firebase.firestore.FieldValue.arrayUnion(ref)
+    });
   }
 };
 
