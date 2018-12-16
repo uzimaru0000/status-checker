@@ -38,5 +38,66 @@ export default {
 };
 </script>
 
-<style>
+
+<style lang="scss">
+@import "~bulma/sass/utilities/_all";
+
+$primary: #4daab3;
+$primary-invert: findColorInvert($primary);
+$info: #4d8ab3;
+$info-invert: findColorInvert($info);
+$success: #4db371;
+$success-invert: findColorInvert($success);
+$warning: #b39f4d;
+$warning-invert: findColorInvert($warning);
+$danger: #b34d61;
+$danger-invert: findColorInvert($danger);
+$light: #eeeeee;
+$light-invert: findColorInvert($light);
+
+$colors: (
+  "white": (
+    $white,
+    $black
+  ),
+  "black": (
+    $black,
+    $white
+  ),
+  "light": (
+    $light,
+    $light-invert
+  ),
+  "dark": (
+    $dark,
+    $dark-invert
+  ),
+  "primary": (
+    $primary,
+    $primary-invert
+  ),
+  "info": (
+    $info,
+    $info-invert
+  ),
+  "success": (
+    $success,
+    $success-invert
+  ),
+  "warning": (
+    $warning,
+    $warning-invert
+  ),
+  "danger": (
+    $danger,
+    $danger-invert
+  )
+);
+
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 </style>

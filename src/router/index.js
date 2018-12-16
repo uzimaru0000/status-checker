@@ -23,15 +23,7 @@ const router = new Router({
     {
       path: '/statusitem',
       name: 'StatusItem',
-      component: StatusItem,
-      props: {
-        user: {
-          name: 'Taro Yamada',
-          motivation: 100,
-          comment: 'コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント',
-          imageURL: 'https://bulma.io/images/placeholders/96x96.png'
-        }
-      }
+      component: StatusItem
     },
     {
       path: '/login',

@@ -1,5 +1,9 @@
 <template>
-  <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+  <nav
+    class="navbar has-shadow has-background-light"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div class="container">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
@@ -19,8 +23,8 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div v-if="user === null" class="buttons">
-              <router-link to="/signup" class="button is-primary">SignUp</router-link>
-              <router-link to="/login" class="button is-light">Login</router-link>
+              <router-link to="/signup" class="button is-primary auth-btn">SignUp</router-link>
+              <router-link to="/login" class="button is-white auth-btn">Login</router-link>
             </div>
             <button v-else @click="Logout" class="button is-danger">Logout</button>
           </div>
@@ -50,8 +54,7 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  width: 128px;
-  margin: 8px;
+.auth-btn {
+  min-width: 98px;
 }
 </style>
