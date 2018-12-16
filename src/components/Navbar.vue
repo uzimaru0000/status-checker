@@ -19,7 +19,7 @@
           <div class="navbar-item">
             <div v-if="user === null" class="buttons">
               <router-link to="/signup" class="button is-primary">SignUp</router-link>
-              <router-link to="/login" class="button is-light">SignUp</router-link>
+              <router-link to="/login" class="button is-light">Login</router-link>
             </div>
             <button v-else @click="Logout" class="button is-danger">Logout</button>
           </div>
