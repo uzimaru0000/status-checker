@@ -21,12 +21,12 @@ export default {
   },
   created() {
     firebase.OnAuthStateChanged(async user => {
-      this.user = user;
-      this.initFlag = true;
-
-      if (user !== null && !(await firebase.IsUserRegister(user.email))) {
-        firebase.StoreUserData(user);
+      if (user !== null) {
+        if (!(await firebase.IsUserRegister(user.email)))
+          firebase.StoreUserData(user);
+        this.user = await firebase.GetUser(user.email);
       }
+      this.initFlag = true;
     });
   }
 };
