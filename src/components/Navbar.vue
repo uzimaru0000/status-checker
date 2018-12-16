@@ -2,9 +2,10 @@
   <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <span class="title">
-          <router-link to="/">LOGO</router-link>
-        </span>
+        <router-link to="/" class="navbar-item">
+          <img src="../assets/logo/logo.png">
+          <span>Status Screen</span>
+        </router-link>
 
         <div class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
