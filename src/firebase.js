@@ -17,6 +17,7 @@ const modules = {
     const settings = { timestampsInSnapshots: true };
     firebase.firestore().settings(settings);
   },
+  Instence: () => firebase.firestore(),
   OnAuthStateChanged: (callback) => {
     return firebase.auth().onAuthStateChanged(callback);
   },
@@ -41,7 +42,8 @@ const modules = {
       motivation: 100,
       comment: "",
       status: "",
-      joinedGroups: []
+      joinedGroups: [],
+      email: user.email
     });
   },
   IsUserRegister: async email => {
@@ -51,17 +53,25 @@ const modules = {
   GetUser: async email => {
     const snapshot = await firebase.firestore().collection('users').doc(email).get();
     if (snapshot.exists) {
-      const data = snapshot.data();
-      data.email = snapshot.id;
-      return data;
+      return snapshot.data();
     } else {
       return null;
     }
   },
+  UpdateUser: user => {
+    return firebase.firestore().collection('users').doc(user.email).set(user);
+  },
   CreateGroup: (name, user) => {
     return firebase.firestore().collection('group').add({
       name: name,
-      members: [user.email]
+      members: [firebase.firestore().collection('users').doc(user.email)]
+    });
+  },
+  JoinGroup: (id, user) => {
+    const ref = firebase.firestore().collection('users').doc(user.email);
+
+    return firebase.firestore().collection('group').doc(id).update({
+      members: firebase.firestore.FieldValue.arrayUnion(ref)
     });
   }
 };

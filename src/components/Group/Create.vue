@@ -5,19 +5,14 @@
         <span class="title is-1">Create Group</span>
       </div>
       <div class="column is-6">
-        <div class="field">
-          <label class="label">GroupName</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              v-model="groupName"
-              :class="{ 'is-danger': errors.name }"
-            >
-          </div>
-          <p v-if="errors.name" class="help is-danger">入力してください</p>
-        </div>
-        <div class="field is-grouped is-grouped-right">
+        <b-field
+          label="GroupName"
+          :type="{ 'is-danger': errors.name }"
+          :message="{ '入力してください': errors.name }"
+        >
+          <b-input v-model="groupName"/>
+        </b-field>
+        <b-field grouped position="is-right">
           <div class="control">
             <button
               class="button is-primary"
@@ -26,7 +21,7 @@
             >Create</button>
             <router-link class="button is-light" to="/group">Cancel</router-link>
           </div>
-        </div>
+        </b-field>
       </div>
     </div>
   </section>
@@ -58,13 +53,18 @@ export default {
 
       try {
         this.creating = true;
-        await firebase.CreateGroup(this.groupName, this.user);
+        const ref = await firebase.CreateGroup(this.groupName, this.user);
+        const data = await ref.get();
+        this.user.joinedGroups = this.user.joinedGroups
+          ? this.user.joinedGroups.concat(data.id)
+          : [data.id];
+        await firebase.UpdateUser(this.user);
         this.creating = false;
       } catch (err) {
-        console.log(err);
+        this.creating = false;
         this.$toast.open({
           duration: 5000,
-          message: "Create Error",
+          message: err,
           position: "is-top",
           type: "is-danger"
         });

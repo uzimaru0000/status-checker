@@ -13,8 +13,8 @@ export default {
   },
   methods: {},
   created() {
-    if (this.user.joinedGroup) {
-      // TODO: 0番目のグループViewに移動
+    if (this.user.joinedGroup && this.user.joinedGroup.length !== 0) {
+      console.log(this.user.joinedGroup[0]);
     }
   }
 };

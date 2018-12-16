@@ -81,6 +81,8 @@ router.beforeEach((to, from, next) => {
         unsubs();
       }
     });
+  } else {
+    next();
   }
 });
 

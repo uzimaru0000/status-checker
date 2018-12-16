@@ -3,6 +3,7 @@
     <navbar :user="user"/>
     <router-view v-if="initFlag" :user="user"/>
     <b-loading v-else :is-full-page="true" :active="true"></b-loading>
+    <div>{{user}}</div>
   </div>
 </template>
 
@@ -25,6 +26,11 @@ export default {
         if (!(await firebase.IsUserRegister(user.email)))
           firebase.StoreUserData(user);
         this.user = await firebase.GetUser(user.email);
+        firebase
+          .Instence()
+          .collection("users")
+          .doc(user.email)
+          .onSnapshot(x => (this.user = x.data()), err => console.log(err));
       }
       this.initFlag = true;
     });
