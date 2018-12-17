@@ -7,18 +7,22 @@
         </p>
       </div>
 
-      <div class="column">
-        <b-field label="Name" type="is-danger">
-          <b-input v-model="user.name"></b-input>
-        </b-field>
-
-        <b-field label="Motivation">
-          <slide-bar style="{ width: 100px; height: 10px; }"/>
-        </b-field>
-
-        <b-field label="Note">
-          <b-input maxlength="200" type="textarea"></b-input>
-        </b-field>
+      <div class="column columns is-multiline is-vcentered">
+        <div class="column is-full">
+          <b-field label="Name" type="is-danger">
+            <b-input v-model="user.name"></b-input>
+          </b-field>
+        </div>
+        <div class="column is-full">
+          <b-field label="Motivation">
+            <slide-bar size="is-large" type="is-primary" v-model.number="user.motivation"/>
+          </b-field>
+        </div>
+        <div class="column is-full">
+          <b-field label="Note">
+            <b-input type="textarea"></b-input>
+          </b-field>
+        </div>
       </div>
     </div>
     <div class="content">
@@ -38,7 +42,6 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
 </style>
 
