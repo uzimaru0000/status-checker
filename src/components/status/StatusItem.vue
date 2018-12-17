@@ -18,9 +18,6 @@
         >{{ user.motivation }}%</progress>
         <p>{{ user.comment }}</p>
       </div>
-      <!-- <div class="media-right">
-        emoji
-      </div>-->
     </div>
   </div>
 </template>

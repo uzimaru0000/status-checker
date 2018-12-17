@@ -60,6 +60,8 @@ export default {
           : [data.id];
         await firebase.UpdateUser(this.user);
         this.creating = false;
+
+        this.$router.push({ path: `/status/${data.id}` });
       } catch (err) {
         this.creating = false;
         this.$toast.open({

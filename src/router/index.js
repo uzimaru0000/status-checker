@@ -52,17 +52,14 @@ const router = new Router({
           path: 'create',
           name: 'Create',
           component: Create
+        },
+        {
+          path: ':id',
+          name: 'Status',
+          component: Status,
+          props: true
         }
       ]
-    },
-    {
-      path: '/status/:id',
-      name: 'Status',
-      component: Status,
-      meta: {
-        requiresAuth: true
-      },
-      props: true
     }
   ]
 });

@@ -54,6 +54,7 @@ export default {
           : [this.id];
         await firebase.UpdateUser(this.user);
         this.join = false;
+        this.$route.push({ path: `/status/${this.id}` });
       } catch (err) {
         this.join = false;
         this.$toast.open({

@@ -43,7 +43,8 @@ const modules = {
       comment: "",
       status: "",
       joinedGroups: [],
-      email: user.email
+      email: user.email,
+      skill: []
     });
   },
   IsUserRegister: async email => {
@@ -64,12 +65,12 @@ const modules = {
   CreateGroup: (name, user) => {
     return firebase.firestore().collection('group').add({
       name: name,
-      members: [firebase.firestore().collection('users').doc(user.email)]
+      members: [user.email]
     });
   },
   JoinGroup: (id, user) => {
     return firebase.firestore().collection('group').doc(id).update({
-      members: user.email
+      members: firebase.firestore.FieldValue.arrayUnion(user.email)
     });
   },
   GetGroup: async id => {

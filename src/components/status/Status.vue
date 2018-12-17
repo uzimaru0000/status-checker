@@ -13,6 +13,11 @@
           >
             <status-item :user="member"/>
           </div>
+          <div class="column is-full">
+            <div class="box has-text-centered">
+              <b-icon pack="fas" icon="plus-circle" size="is-large"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -33,15 +38,13 @@ export default {
   data() {
     return {
       group: null,
-      isFetching: true
+      isFetching: true,
+      unsubs: null
     };
   },
   components: { StatusItem },
   async created() {
     this.group = await firebase.GetGroup(this.id);
-
-    console.log(this.group);
-
     if (!this.group || !this.group.members.some(x => x === this.user.email)) {
       this.$router.push({ path: "/group" });
       this.$toast.open({
@@ -59,7 +62,27 @@ export default {
       this.group.members.map(async key => firebase.GetUser(key))
     );
 
+    this.unsubs = firebase
+      .Instence()
+      .collection("group")
+      .doc(this.id)
+      .onSnapshot(
+        async x => {
+          if (x.metadata.hasPendingWrites) return;
+          console.log("a");
+          const g = x.data();
+          g.members = await Promise.all(
+            g.members.map(async key => firebase.GetUser(key))
+          );
+          this.group = g;
+        },
+        err => console.log(err)
+      );
+
     this.isFetching = false;
+  },
+  beforeDestroy() {
+    this.unsubs();
   }
 };
 </script>
