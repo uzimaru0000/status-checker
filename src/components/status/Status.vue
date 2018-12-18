@@ -15,7 +15,13 @@
           </div>
           <div class="column is-full">
             <div class="box has-text-centered">
-              <b-icon pack="fas" icon="plus-circle" size="is-large"/>
+              <div class="columns">
+                <div class="column is-3">
+                  <span class="title">GroupID</span>
+                </div>
+                <b-input class="column" :value="id" readonly/>
+              </div>
+              <div class="subtitle has-text-left">招待したい人にIDを教えてください</div>
             </div>
           </div>
         </div>
@@ -69,7 +75,6 @@ export default {
       .onSnapshot(
         async x => {
           if (x.metadata.hasPendingWrites) return;
-          console.log("a");
           const g = x.data();
           g.members = await Promise.all(
             g.members.map(async key => firebase.GetUser(key))
@@ -81,6 +86,7 @@ export default {
 
     this.isFetching = false;
   },
+  methods: {},
   beforeDestroy() {
     this.unsubs();
   }
