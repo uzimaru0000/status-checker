@@ -39,10 +39,10 @@ const modules = {
     const user = await firebase.firestore().collection('users').doc(email).get();
     return user.exists;
   },
-  GetUser: async email => {
-    const snapshot = await firebase.firestore().collection('users').doc(email).get();
+  GetUser: async id => {
+    const snapshot = await firebase.firestore().collection('users').doc(id).get();
     if (snapshot.exists) {
-      return snapshot.data();
+      return Object.assign(snapshot.data(), { id: snapshot.id });
     } else {
       return null;
     }

@@ -24,16 +24,22 @@ export default {
   created() {
     firebase.OnAuthStateChanged(async user => {
       if (user !== null) {
-        this.user = await firebase.GetUser(user.email);
+        this.user = await firebase.GetUser(user.uid);
         this.userUnsubs = firebase
           .Instence()
           .collection("users")
-          .doc(user.email)
-          .onSnapshot(x => (this.user = x.data()), err => console.log(err));
+          .doc(user.uid)
+          .onSnapshot(
+            x => (this.user = Object.assign(x.data(), { id: x.id })),
+            err => console.log(err)
+          );
+
+        console.log(this.user);
       } else {
         this.user = null;
         if (this.userUnSubs) this.userUnSubs();
         this.userUnSubs = null;
+        console.log("hoge");
       }
       this.initFlag = true;
     });

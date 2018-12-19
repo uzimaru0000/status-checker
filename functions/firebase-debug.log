@@ -1,0 +1,28 @@
+[debug] [2018-12-19T17:05:08.524Z] ----------------------------------------------------------------------
+[debug] [2018-12-19T17:05:08.527Z] Command:       /Users/oba/.nvm/versions/node/v8.9.3/bin/node /Users/oba/.nvm/versions/node/v8.9.3/bin/firebase serve --only functions
+[debug] [2018-12-19T17:05:08.527Z] CLI Version:   5.1.1
+[debug] [2018-12-19T17:05:08.527Z] Platform:      darwin
+[debug] [2018-12-19T17:05:08.527Z] Node Version:  v8.9.3
+[debug] [2018-12-19T17:05:08.528Z] Time:          Thu Dec 20 2018 02:05:08 GMT+0900 (JST)
+[debug] [2018-12-19T17:05:08.528Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-19T17:05:08.547Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-19T17:05:08.548Z] > authorizing via signed-in user
+[debug] [2018-12-19T17:05:08.548Z] [iam] checking project status-a7b18 for permissions ["firebase.projects.get"]
+[debug] [2018-12-19T17:05:08.550Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/status-a7b18:testIamPermissions  
+
+[debug] [2018-12-19T17:05:09.377Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-19T17:05:09.379Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/status-a7b18  
+ 
+[debug] [2018-12-19T17:05:10.173Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/oba/Documents/vue/status-checker'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-12-19T17:05:12.022Z] Fetching environment
+[debug] [2018-12-19T17:05:12.024Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/934149131287:getServerAppConfig  
+ 
+[debug] [2018-12-19T17:05:12.844Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-19T17:05:12.845Z] Starting @google-cloud/functions-emulator
+[debug] [2018-12-19T17:05:14.938Z] Parsing function triggers
+[info] ✔  functions: createGroup: http://localhost:5000/status-a7b18/us-central1/createGroup
