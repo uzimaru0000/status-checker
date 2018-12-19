@@ -17,20 +17,23 @@ export default {
   data() {
     return {
       user: null,
-      initFlag: false
+      initFlag: false,
+      userUnSubs: null
     };
   },
   created() {
     firebase.OnAuthStateChanged(async user => {
       if (user !== null) {
-        if (!(await firebase.IsUserRegister(user.email)))
-          firebase.StoreUserData(user);
         this.user = await firebase.GetUser(user.email);
-        firebase
+        this.userUnsubs = firebase
           .Instence()
           .collection("users")
           .doc(user.email)
           .onSnapshot(x => (this.user = x.data()), err => console.log(err));
+      } else {
+        this.user = null;
+        if (this.userUnSubs) this.userUnSubs();
+        this.userUnSubs = null;
       }
       this.initFlag = true;
     });

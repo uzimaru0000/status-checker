@@ -46,7 +46,9 @@ export default {
     Logout() {
       firebase
         .Logout()
-        .then(_ => this.$router.push({ path: "/" }))
+        .then(_ => {
+          this.$router.push({ path: "/" });
+        })
         .catch(err => console.log(err));
     }
   }

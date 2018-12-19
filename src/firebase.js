@@ -35,17 +35,6 @@ const modules = {
   IsAuth: () => {
     return firebase.auth().currentUser ? true : false;
   },
-  StoreUserData: user => {
-    firebase.firestore().collection('users').doc(user.email).set({
-      imageURL: user.photoURL,
-      name: user.displayName,
-      motivation: 100,
-      comment: "",
-      status: "",
-      joinedGroups: [],
-      email: user.email
-    });
-  },
   IsUserRegister: async email => {
     const user = await firebase.firestore().collection('users').doc(email).get();
     return user.exists;
