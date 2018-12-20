@@ -33,7 +33,7 @@ groupRequest.get('/:id', async (req, res) => {
     res.status(500).send({ message: err });
   }
 });
-groupRequest.post('/', async (req, res) => {
+groupRequest.post('', async (req, res) => {
   try {
     const groupID = await model.createGroup(req.body.name, req.body.id);
     res.status(200).send({ groupID: groupID });
