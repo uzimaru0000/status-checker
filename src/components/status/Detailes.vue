@@ -39,7 +39,7 @@
               <b-taglist>
                 <b-tag
                   v-for="(skill, i) in user.skill"
-                  :key="skill"
+                  :key="i"
                   type="is-primary"
                   size="is-medium"
                   closable
@@ -76,15 +76,30 @@ export default {
       else if (motivation >= 10) return "is-warning";
       else return "is-danger";
     },
-    enter(e) {
+    enter() {
       if (/\S+/.test(this.inputSkill)) {
         this.user.skill = (this.user.skill || []).concat(this.inputSkill);
-
         this.inputSkill = "";
       }
     },
     delTag(i) {
       this.user.skill.splice(i, 1);
+    }
+  },
+  async beforeDestroy() {
+    try {
+      await fetch(
+        `https://us-central1-status-a7b18.cloudfunctions.net/user/${
+          this.user.id
+        }`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.user)
+        }
+      );
+    } catch (err) {
+      console.log(err);
     }
   }
 };

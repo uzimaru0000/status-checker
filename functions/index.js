@@ -73,16 +73,16 @@ userRequest.get('/:id', async (req, res) => {
   }
 });
 userRequest.put('/:id', async (req, res) => {
-  const id = req.param('id');
-  if (id) {
+  const id = req.params.id;
+  if (!id) {
     res.status(400).send({ message: "bad request" });
     return;
   }
   try {
-    await model.updateUser(id, user);
-    res.status(200).send({ message: success });
+    await model.updateUser(id, req.body);
+    res.status(200).send({ message: 'success' });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: 'error' });
   }
 });
 exports.user = functions.https.onRequest(userRequest);
