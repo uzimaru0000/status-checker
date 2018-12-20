@@ -55,11 +55,15 @@ export default {
     this.group = await fetch(
       `https://us-central1-status-a7b18.cloudfunctions.net/group/${this.id}`
     ).then(x => x.json());
-    if (!this.group || !this.group.members.some(x => x.id === this.user.id)) {
+
+    if (
+      this.group.message ||
+      !this.group.members.some(x => x.id === this.user.id)
+    ) {
       this.$router.push({ path: "/group" });
       this.$toast.open({
         duration: 5000,
-        message: !this.group
+        message: this.group.message
           ? "グループが存在しません"
           : "グループに所属していません",
         position: "is-top",
