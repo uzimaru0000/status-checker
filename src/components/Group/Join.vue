@@ -48,11 +48,14 @@ export default {
 
       try {
         this.join = true;
-        await firebase.JoinGroup(this.id, this.user);
-        this.user.joinedGroups = this.user.joinedGroups
-          ? this.user.joinedGroups.concat(this.id)
-          : [this.id];
-        await firebase.UpdateUser(this.user);
+        await fetch(
+          `http://localhost:5000/status-a7b18/us-central1/group/${this.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user: this.user.id })
+          }
+        );
         this.join = false;
       } catch (err) {
         this.join = false;

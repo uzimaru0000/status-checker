@@ -24,7 +24,9 @@ export default {
   created() {
     firebase.OnAuthStateChanged(async user => {
       if (user !== null) {
-        this.user = await firebase.GetUser(user.uid);
+        this.user = await fetch(
+          `http://localhost:5000/status-a7b18/us-central1/user/${user.uid}`
+        ).then(x => x.json());
         this.userUnsubs = firebase
           .Instence()
           .collection("users")
@@ -33,8 +35,6 @@ export default {
             x => (this.user = Object.assign(x.data(), { id: x.id })),
             err => console.log(err)
           );
-
-        console.log(this.user);
       } else {
         this.user = null;
         if (this.userUnSubs) this.userUnSubs();

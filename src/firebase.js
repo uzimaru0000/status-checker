@@ -34,34 +34,6 @@ const modules = {
   },
   IsAuth: () => {
     return firebase.auth().currentUser ? true : false;
-  },
-  IsUserRegister: async email => {
-    const user = await firebase.firestore().collection('users').doc(email).get();
-    return user.exists;
-  },
-  GetUser: async id => {
-    const snapshot = await firebase.firestore().collection('users').doc(id).get();
-    if (snapshot.exists) {
-      return Object.assign(snapshot.data(), { id: snapshot.id });
-    } else {
-      return null;
-    }
-  },
-  UpdateUser: user => {
-    return firebase.firestore().collection('users').doc(user.email).set(user);
-  },
-  CreateGroup: (name, user) => {
-    return firebase.firestore().collection('group').add({
-      name: name,
-      members: [firebase.firestore().collection('users').doc(user.email)]
-    });
-  },
-  JoinGroup: (id, user) => {
-    const ref = firebase.firestore().collection('users').doc(user.email);
-
-    return firebase.firestore().collection('group').doc(id).update({
-      members: firebase.firestore.FieldValue.arrayUnion(ref)
-    });
   }
 };
 
