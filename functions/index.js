@@ -1,7 +1,8 @@
 const firebase = require('firebase');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const cors = require('cors')({ origin: true });
+const express = require('express');
+const cors = require('cors');
 
 const app = admin.initializeApp(functions.config());
 admin.firestore().settings({ timestampsInSnapshots: true });
@@ -43,3 +44,34 @@ exports.createGroup = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+const userRequest = express();
+userRequest.use(cors({ origin: true }));
+userRequest.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send({ message: "bad request" });
+    return;
+  }
+  try {
+    const user = await app.firestore().collection('users').doc(id).get()
+      .then(x => Object.assign(x.data(), { id: x.id }));
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+userRequest.put('/:id', async (req, res) => {
+  const id = req.param('id');
+  if (id) {
+    res.status(400).send({ message: "bad request" });
+    return;
+  }
+  try {
+    await app.firestore().collection('users').doc(id).update(req.body);
+    res.status(200).send({ message: success });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+exports.user = functions.https.onRequest(userRequest);
