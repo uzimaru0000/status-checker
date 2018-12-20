@@ -13,8 +13,8 @@ export default {
   },
   methods: {},
   created() {
-    if (this.user.joinedGroup && this.user.joinedGroup.length !== 0) {
-      console.log(this.user.joinedGroup[0]);
+    if (this.user.joinedGroups && this.user.joinedGroups.length !== 0) {
+      console.log(this.user.joinedGroups[0]);
     }
   }
 };

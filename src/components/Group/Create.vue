@@ -1,5 +1,6 @@
 <template>
   <section class="section">
+    <b-loading :is-full-page="true" :active="creating"/>
     <div class="columns is-multiline is-centered">
       <div class="column is-full has-text-centered">
         <span class="title is-1">Create Group</span>
@@ -53,13 +54,16 @@ export default {
 
       try {
         this.creating = true;
-        const ref = await firebase.CreateGroup(this.groupName, this.user);
-        const data = await ref.get();
-        this.user.joinedGroups = this.user.joinedGroups
-          ? this.user.joinedGroups.concat(data.id)
-          : [data.id];
-        await firebase.UpdateUser(this.user);
+        const res = await fetch(
+          "https://us-central1-status-a7b18.cloudfunctions.net/group/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: this.groupName, id: this.user.id })
+          }
+        ).then(x => x.json());
         this.creating = false;
+        // TODO: /group/:id に飛ばす
       } catch (err) {
         this.creating = false;
         this.$toast.open({
