@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from '../firebase';
 import HelloWorld from '@/components/HelloWorld'
+import Edit from '@/components/Status/Edit'
 import Login from '@/components/Auth/Login'
 import SignUp from '@/components/Auth/SignUp'
 import Group from '@/components/Group/Group'
@@ -20,6 +21,14 @@ const router = new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/edit',
+      name: 'Edit',
+      component: Edit,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
