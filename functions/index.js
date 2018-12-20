@@ -27,7 +27,7 @@ groupRequest.get('/:id', async (req, res) => {
   }
   try {
     const group = await model.getGroup(id);
-    group.members = await Promise.all(group.members.map(async userID => getUser(userID)));
+    group.members = await Promise.all(group.members.map(async userID => await model.getUser(userID)));
     res.status(200).send(group);
   } catch (err) {
     res.status(500).send({ message: err });

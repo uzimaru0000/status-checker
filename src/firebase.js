@@ -34,7 +34,8 @@ const modules = {
   },
   IsAuth: () => {
     return firebase.auth().currentUser ? true : false;
-  }
+  },
+  endpoint: "https://us-central1-status-a7b18.cloudfunctions.net"
 };
 
 
