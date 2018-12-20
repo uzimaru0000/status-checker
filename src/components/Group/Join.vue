@@ -49,7 +49,9 @@ export default {
       try {
         this.join = true;
         await fetch(
-          `http://localhost:5000/status-a7b18/us-central1/group/${this.id}`,
+          `https://us-central1-status-a7b18.cloudfunctions.net/group/${
+            this.id
+          }`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

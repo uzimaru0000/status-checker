@@ -55,7 +55,7 @@ export default {
       try {
         this.creating = true;
         const res = await fetch(
-          "http://localhost:5000/status-a7b18/us-central1/createGroup",
+          "https://us-central1-status-a7b18.cloudfunctions.net/group",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

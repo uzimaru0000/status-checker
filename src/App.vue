@@ -25,7 +25,7 @@ export default {
     firebase.OnAuthStateChanged(async user => {
       if (user !== null) {
         this.user = await fetch(
-          `http://localhost:5000/status-a7b18/us-central1/user/${user.uid}`
+          `https://us-central1-status-a7b18.cloudfunctions.net/user/${user.uid}`
         ).then(x => x.json());
         this.userUnsubs = firebase
           .Instence()
