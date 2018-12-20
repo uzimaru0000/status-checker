@@ -35,52 +35,7 @@ const modules = {
   IsAuth: () => {
     return firebase.auth().currentUser ? true : false;
   },
-  StoreUserData: user => {
-    firebase.firestore().collection('users').doc(user.email).set({
-      imageURL: user.photoURL,
-      name: user.displayName,
-      motivation: 100,
-      comment: "",
-      status: "",
-      joinedGroups: [],
-      email: user.email,
-      skill: []
-    });
-  },
-  IsUserRegister: async email => {
-    const user = await firebase.firestore().collection('users').doc(email).get();
-    return user.exists;
-  },
-  GetUser: async email => {
-    const snapshot = await firebase.firestore().collection('users').doc(email).get();
-    if (snapshot.exists) {
-      return snapshot.data();
-    } else {
-      return null;
-    }
-  },
-  UpdateUser: user => {
-    return firebase.firestore().collection('users').doc(user.email).set(user);
-  },
-  CreateGroup: (name, user) => {
-    return firebase.firestore().collection('group').add({
-      name: name,
-      members: [user.email]
-    });
-  },
-  JoinGroup: (id, user) => {
-    return firebase.firestore().collection('group').doc(id).update({
-      members: firebase.firestore.FieldValue.arrayUnion(user.email)
-    });
-  },
-  GetGroup: async id => {
-    const snapshot = await firebase.firestore().collection('group').doc(id).get();
-    if (snapshot.exists) {
-      return snapshot.data();
-    } else {
-      return null;
-    }
-  }
+  endpoint: "https://us-central1-status-a7b18.cloudfunctions.net"
 };
 
 

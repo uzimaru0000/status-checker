@@ -29,12 +29,6 @@ export default {
   methods: {
     SignUp() {
       firebase.LoginWithGithub();
-    },
-    Logout() {
-      firebase
-        .Logout()
-        .then(() => this.$router.push({ path: "/" }))
-        .catch(err => console.error(err));
     }
   }
 };
