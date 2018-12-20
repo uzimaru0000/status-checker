@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import firebase from '../firebase';
 import HelloWorld from '@/components/HelloWorld'
 import StatusItem from '@/components/Status/StatusItem'
-import Detaile from '@/components/Status/Detailes'
+import Edit from '@/components/Status/Edit'
 import Login from '@/components/Auth/Login'
 import SignUp from '@/components/Auth/SignUp'
 import Group from '@/components/Group/Group'
@@ -28,9 +28,9 @@ const router = new Router({
       component: StatusItem
     },
     {
-      path: '/detaile',
-      name: 'Detaile',
-      component: Detaile
+      path: '/edit',
+      name: 'Edit',
+      component: Edit
     },
     {
       path: '/login',
