@@ -63,12 +63,8 @@ export default {
           }
         ).then(x => x.json());
         this.creating = false;
-<<<<<<< HEAD
 
         this.$router.push({ path: `/status/${data.id}` });
-=======
-        // TODO: /group/:id に飛ばす
->>>>>>> develop
       } catch (err) {
         this.creating = false;
         this.$toast.open({

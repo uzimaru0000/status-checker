@@ -50,8 +50,11 @@ export default {
   },
   components: { StatusItem },
   async created() {
-    this.group = await firebase.GetGroup(this.id);
-    if (!this.group || !this.group.members.some(x => x === this.user.email)) {
+    this.group = await fetch(
+      `https://us-central1-status-a7b18.cloudfunctions.net/group/${this.id}`
+    ).then(x => x.json());
+    console.log(this.group);
+    if (!this.group || !this.group.members.some(x => x.id === this.user.id)) {
       this.$router.push({ path: "/group" });
       this.$toast.open({
         duration: 5000,
@@ -64,10 +67,6 @@ export default {
       return;
     }
 
-    this.group.members = await Promise.all(
-      this.group.members.map(async key => firebase.GetUser(key))
-    );
-
     this.unsubs = firebase
       .Instence()
       .collection("group")
@@ -77,7 +76,12 @@ export default {
           if (x.metadata.hasPendingWrites) return;
           const g = x.data();
           g.members = await Promise.all(
-            g.members.map(async key => firebase.GetUser(key))
+            g.members.map(
+              async key =>
+                await fetch(
+                  `https://us-central1-status-a7b18.cloudfunctions.net/user/${key}`
+                ).then(x => x.json())
+            )
           );
           this.group = g;
         },
@@ -88,7 +92,7 @@ export default {
   },
   methods: {},
   beforeDestroy() {
-    this.unsubs();
+    if (this.unsubs) this.unsubs();
   }
 };
 </script>
