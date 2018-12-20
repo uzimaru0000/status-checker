@@ -16,6 +16,7 @@ import NotFound from '@/components/NotFound'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
