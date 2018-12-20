@@ -8,28 +8,40 @@
       </div>
       <div class="media-content">
         <div class="content">
-          <span class="title is-3">{{ user.name }}</span>
+          <span class="title is-3">{{ user.name || "Anonymous" }}</span>
           <b-icon pack="far" icon="smile" size="is-medium"/>
         </div>
         <progress
-          class="progress is-primary is-small"
+          class="progress is-small"
+          :class="[motivationColor(user.motivation)]"
           :value="user.motivation"
           max="100"
         >{{ user.motivation }}%</progress>
+        <b-taglist>
+          <b-tag v-for="(skill, i) in user.skill" :key="i" type="is-info">{{skill}}</b-tag>
+        </b-taglist>
         <p>{{ user.comment }}</p>
       </div>
-      <!-- <div class="media-right">
-        emoji
-      </div>-->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MyItem",
+  name: "StatusItem",
   props: {
     user: Object
+  },
+  methods: {
+    motivationColor(motivation) {
+      if (motivation >= 30) {
+        return "is-primary";
+      } else if (motivation >= 10) {
+        return "is-warning";
+      } else {
+        return "is-danger";
+      }
+    }
   }
 };
 </script>
