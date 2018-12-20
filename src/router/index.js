@@ -10,6 +10,7 @@ import Group from '@/components/Group/Group'
 import Select from '@/components/Group/Select'
 import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
+import NotFound from '@/components/NotFound'
 
 
 Vue.use(Router)
@@ -40,6 +41,11 @@ const router = new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '*',
+      name: '404NotFound',
+      component: NotFound
     },
     {
       path: '/group',

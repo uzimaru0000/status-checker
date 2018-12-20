@@ -17,20 +17,29 @@ export default {
   data() {
     return {
       user: null,
-      initFlag: false
+      initFlag: false,
+      userUnSubs: null
     };
   },
   created() {
     firebase.OnAuthStateChanged(async user => {
       if (user !== null) {
-        if (!(await firebase.IsUserRegister(user.email)))
-          firebase.StoreUserData(user);
-        this.user = await firebase.GetUser(user.email);
-        firebase
+        this.user = await fetch(
+          `https://us-central1-status-a7b18.cloudfunctions.net/user/${user.uid}`
+        ).then(x => x.json());
+        this.userUnsubs = firebase
           .Instence()
           .collection("users")
-          .doc(user.email)
-          .onSnapshot(x => (this.user = x.data()), err => console.log(err));
+          .doc(user.uid)
+          .onSnapshot(
+            x => (this.user = Object.assign(x.data(), { id: x.id })),
+            err => console.log(err)
+          );
+      } else {
+        this.user = null;
+        if (this.userUnSubs) this.userUnSubs();
+        this.userUnSubs = null;
+        console.log("hoge");
       }
       this.initFlag = true;
     });
