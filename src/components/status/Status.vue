@@ -2,7 +2,9 @@
   <section class="section">
     <div v-if="!isFetching" class="columns">
       <div class="column is-5">
-        <status-item :user="user"/>
+        <router-link to="/edit">
+          <status-item :user="user"/>
+        </router-link>
       </div>
       <div class="column is-7">
         <div class="columns is-multiline">
@@ -53,7 +55,6 @@ export default {
     this.group = await fetch(
       `https://us-central1-status-a7b18.cloudfunctions.net/group/${this.id}`
     ).then(x => x.json());
-    console.log(this.group);
     if (!this.group || !this.group.members.some(x => x.id === this.user.id)) {
       this.$router.push({ path: "/group" });
       this.$toast.open({

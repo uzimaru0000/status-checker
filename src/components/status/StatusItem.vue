@@ -17,6 +17,9 @@
           :value="user.motivation"
           max="100"
         >{{ user.motivation }}%</progress>
+        <b-taglist>
+          <b-tag v-for="(skill, i) in user.skill" :key="i" type="is-info">{{skill}}</b-tag>
+        </b-taglist>
         <p>{{ user.comment }}</p>
       </div>
     </div>
