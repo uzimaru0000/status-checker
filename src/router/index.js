@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from '../firebase';
-import HelloWorld from '@/components/HelloWorld'
 import Edit from '@/components/Status/Edit'
 import Login from '@/components/Auth/Login'
-import SignUp from '@/components/Auth/SignUp'
 import Group from '@/components/Group/Group'
 import Select from '@/components/Group/Select'
 import Create from '@/components/Group/Create'
@@ -33,14 +31,9 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
+      path: '/signin',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/signup',
-      name: 'SignUp',
-      component: SignUp
     },
     {
       path: '*',

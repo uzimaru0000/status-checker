@@ -3,16 +3,31 @@
     <figure class="image" style="width:400px">
       <img src="../assets/logo/logo_transparent.jpeg">
     </figure>
-    <div class="columns">
-      <!-- <input type="button" class="button is-primary is-large" value="Log In"> -->
-      <router-link class="button is-primary is-large" to="/login">Sign In</router-link>
+    <div>
+      <router-link v-if="user===null" class="button is-primary is-normal" to="/login">Sign In</router-link>
+      <router-link v-else class="button is-primary is-normal" :to="groupURL">Go to Group Page</router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {}
+  name: "HomePage",
+  props: {
+    user: Object
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    groupURL() {
+      if (this.user.joinedGroups.length > 0) {
+        return `/group/${this.user.joinedGroups[0]}`;
+      } else {
+        return "/group";
+      }
+    }
+  }
 };
 </script>
 
