@@ -11,6 +11,7 @@ import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
 import Status from '@/components/Status/Status'
 import NotFound from '@/components/NotFound'
+import HomePage from '@/components/HomePage'
 
 
 Vue.use(Router)
@@ -20,8 +21,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'HomePage',
+      component: HomePage
     },
     {
       path: '/edit',
