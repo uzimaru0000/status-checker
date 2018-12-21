@@ -11,7 +11,7 @@ import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
 import Status from '@/components/Status/Status'
 import NotFound from '@/components/NotFound'
-import Emoji from '@/components/Status/Emoji'
+import Chat from '@/components/Chat/Chat'
 
 
 Vue.use(Router)
@@ -46,6 +46,12 @@ const router = new Router({
       path: '*',
       name: '404NotFound',
       component: NotFound
+    },
+    {
+      path: '/chat/:id',
+      name: "Chat",
+      component: Chat,
+      props: true
     },
     {
       path: '/group',

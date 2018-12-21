@@ -13,7 +13,9 @@
             :key="member.email"
             class="column is-full"
           >
-            <status-item :user="member"/>
+            <router-link :to="`/chat/${member.id}`">
+              <status-item :user="member"/>
+            </router-link>
           </div>
           <div class="column is-full">
             <div class="box has-text-centered">
