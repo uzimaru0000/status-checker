@@ -93,7 +93,7 @@ router.beforeEach((to, from, next) => {
         next();
         unsubs();
       } else {
-        next({ path: '/login' });
+        next({ path: '/signin' });
         unsubs();
       }
     });

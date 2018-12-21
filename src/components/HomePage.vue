@@ -4,7 +4,7 @@
       <img src="../assets/logo/logo_transparent.jpeg">
     </figure>
     <div>
-      <router-link v-if="user===null" class="button is-primary is-normal" to="/login">Sign In</router-link>
+      <router-link v-if="user===null" class="button is-primary is-normal" to="/signin">Sign In</router-link>
       <router-link v-else class="button is-primary is-normal" :to="groupURL">Go to Group Page</router-link>
     </div>
   </div>

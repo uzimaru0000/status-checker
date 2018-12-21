@@ -3,7 +3,6 @@
     <navbar :user="user"/>
     <router-view v-if="initFlag" :user="user"/>
     <b-loading v-else :is-full-page="true" :active="true"></b-loading>
-    <div>{{user}}</div>
   </div>
 </template>
 
@@ -39,7 +38,6 @@ export default {
         this.user = null;
         if (this.userUnSubs) this.userUnSubs();
         this.userUnSubs = null;
-        console.log("hoge");
       }
       this.initFlag = true;
     });
@@ -66,7 +64,10 @@ $light-invert: findColorInvert($light);
 
 $emoji: rgb(252, 218, 70);
 $emoji-invert: findColorInvert($emoji);
-
+$google: #0057e7;
+$google-invert: findColorInvert($google);
+$github: #333;
+$github-invert: findColorInvert($github);
 $colors: (
   "white": (
     $white,
@@ -107,6 +108,14 @@ $colors: (
   "emoji": (
     $emoji,
     $emoji-invert
+  ),
+  "google": (
+    $google,
+    $google-invert
+  ),
+  "github": (
+    $github,
+    $github-invert
   )
 );
 

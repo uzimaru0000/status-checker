@@ -1,5 +1,9 @@
 <template>
-  <section class="section" ref="section">
+  <section
+    class="section"
+    ref="section"
+    :style="{'padding-bottom': (inputField ? inputField.clientHeight : 0) + 'px'}"
+  >
     <transition-group v-if="room !== null" class="columns is-multiline" name="show">
       <message
         v-for="message in room.messages"
@@ -10,7 +14,7 @@
       />
     </transition-group>
     <b-loading v-else :is-full-page="true" :active="true"/>
-    <b-field class="input-field has-background-light" grouped>
+    <b-field class="input-field has-background-light" grouped ref="inputField">
       <div class="control is-expanded" :class="{'is-loading': isSending}">
         <textarea
           class="textarea has-fixed-size"
@@ -45,7 +49,8 @@ export default {
       bros: null,
       msg: "",
       isSending: false,
-      section: null
+      section: null,
+      inputField: null
     };
   },
   async created() {
@@ -114,6 +119,7 @@ export default {
   },
   mounted() {
     this.section = this.$refs.section;
+    this.inputField = this.$refs.inputField.$el;
   }
 };
 </script>

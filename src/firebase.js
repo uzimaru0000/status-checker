@@ -23,11 +23,11 @@ const modules = {
   },
   LoginWithGithub: () => {
     const provider = new firebase.auth.GithubAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    return firebase.auth().signInWithPopup(provider);
   },
   LoginWithGoogle: () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    return firebase.auth().signInWithPopup(provider);
   },
   Logout: () => {
     return firebase.auth().signOut();
