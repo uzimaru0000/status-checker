@@ -22,6 +22,19 @@ const updateUser = async (id, user) => {
   }
 }
 
+const addChatRoom = async (userID, brosID, roomID) => {
+  try {
+    const rooms = {};
+    rooms[brosID] = roomID;
+
+    await app.firestore().collection('users').doc(userID).set({
+      chatRoom: rooms
+    }, { merge: true });
+  } catch (err) {
+    throw err;
+  }
+}
+
 const getGroup = async id => {
   try {
     const group =
@@ -72,12 +85,60 @@ const joinGroup = async (id, userID) => {
 
 const userJoinGroup = async (userID, groupID) => {
   try {
-    const user = await getUser(userID);
-    user.joinedGroups = user.joinedGroups.concat(groupID) || [groupID];
-    await updateUser(userID, user);
+    await app.firestore().collection('users').doc(userID).update({
+      joinedGroups: admin.firestore.FieldValue.arrayUnion(groupID)
+    });
   } catch (err) {
     throw err;
   }
 };
 
-module.exports = { app, getUser, updateUser, getGroup, createGroup, joinGroup };
+const createChat = async (userID, brosID) => {
+  try {
+    const ref = await app.firestore().collection('chat').doc();
+    ref.set({ messages: [] });
+
+    await addChatRoom(userID, brosID, ref.id);
+    await addChatRoom(brosID, userID, ref.id);
+
+    return ref.id;
+  } catch (err) {
+    throw err;
+  }
+}
+
+const addMessage = async (roomID, userID, message) => {
+  try {
+    await app.firestore().collection('chat').doc(roomID).update({
+      messages: admin.firestore.FieldValue.arrayUnion({
+        message: message,
+        uid: userID,
+        date: new Date()
+      })
+    });
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getRoom = async roomID => {
+  try {
+    const room =
+      await app.firestore()
+        .collection('chat')
+        .doc(roomID).get()
+        .then(x => x.exists ? x.data() : Promise.reject('This id is not exist.'));
+
+    room.messages = room.messages.map(x => {
+      x.date = x.date.toDate();
+      return x;
+    });
+
+    return room;
+  } catch (err) {
+    return err;
+  }
+}
+
+module.exports = { app, getUser, updateUser, getGroup, createGroup, joinGroup, createChat, addMessage, getRoom };

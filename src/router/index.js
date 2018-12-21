@@ -9,6 +9,7 @@ import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
 import Status from '@/components/Status/Status'
 import NotFound from '@/components/NotFound'
+import Chat from '@/components/Chat/Chat'
 import HomePage from '@/components/HomePage'
 
 
@@ -39,6 +40,12 @@ const router = new Router({
       path: '*',
       name: '404NotFound',
       component: NotFound
+    },
+    {
+      path: '/chat/:id',
+      name: "Chat",
+      component: Chat,
+      props: true
     },
     {
       path: '/group',

@@ -86,3 +86,42 @@ userRequest.put('/:id', async (req, res) => {
   }
 });
 exports.user = functions.https.onRequest(userRequest);
+
+// Chat関連
+const chatRequest = express();
+chatRequest.use(cors({ origin: true }));
+chatRequest.post('/create', async (req, res) => {
+  try {
+    const roomID = await model.createChat(req.body.userID, req.body.brosID);
+    res.status(200).send({ roomID: roomID });
+  } catch (err) {
+    res.status(500).send({ message: 'error' });
+  }
+});
+chatRequest.post('/:id', async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send({ message: "bat request." });
+    return;
+  }
+  try {
+    await model.addMessage(id, req.body.userID, req.body.message);
+    res.status(200).send({ message: 'success' });
+  } catch (err) {
+    res.status(500).send({ message: 'error' });
+  }
+});
+chatRequest.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send({ message: "bat request." });
+    return;
+  }
+  try {
+    const room = await model.getRoom(id);
+    res.status(200).send(room);
+  } catch (err) {
+    res.status(500).send({ message: 'error' });
+  }
+});
+exports.chat = functions.https.onRequest(chatRequest);
