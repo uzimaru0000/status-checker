@@ -23,10 +23,9 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div v-if="user === null" class="buttons">
-              <router-link to="/signup" class="button is-primary auth-btn">SignUp</router-link>
-              <router-link to="/login" class="button is-white auth-btn">Login</router-link>
+              <router-link to="/signin" class="button is-primary auth-btn">Sign In</router-link>
             </div>
-            <button v-else @click="Logout" class="button is-danger">Logout</button>
+            <button v-else @click="Logout" class="button is-danger">Sign out</button>
           </div>
         </div>
       </div>
