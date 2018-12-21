@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" @click="emojiShow = emojiShow ? false : emojiShow">
     <div class="columns">
       <div class="column is-one-third">
         <figure class="image is-fullwidth">
@@ -15,7 +15,23 @@
               :type="user.name.length === 0 ? 'is-danger' : 'is-primary'"
               :message="user.name.length === 0 ? '入力してください' : ''"
             >
-              <b-input v-model="user.name"></b-input>
+              <b-field>
+                <b-input v-model="user.name"></b-input>
+                <div class="collapse-parent">
+                  <button class="button" @click.stop="emojiShow = !emojiShow">
+                    <b-icon pack="far" :icon="user.status"></b-icon>
+                  </button>
+                  <transition name="show">
+                    <emoji
+                      v-show="emojiShow"
+                      :emojis="emojis"
+                      type="is-emoji"
+                      @click="changeState"
+                      class="selecter"
+                    />
+                  </transition>
+                </div>
+              </b-field>
             </b-field>
           </div>
           <div class="column is-full">
@@ -40,7 +56,7 @@
                 <b-tag
                   v-for="(skill, i) in user.skill"
                   :key="i"
-                  type="is-primary"
+                  type="is-info"
                   size="is-medium"
                   closable
                   @close="delTag(i)"
@@ -51,23 +67,40 @@
         </div>
       </div>
     </div>
-    <div class="content">
+    <div class="column">
       <b-field label="Comment">
         <b-input maxlength="140" type="text" v-model="user.comment"></b-input>
       </b-field>
+    </div>
+    <div class="column">
+      <button class="button is-success" @click="update">更新する</button>
     </div>
   </div>
 </template>
 
 <script>
 import SlideBar from "./SlideBar";
+import Emoji from "./Emoji";
 
 export default {
   props: { user: Object },
-  components: { SlideBar },
+  components: { SlideBar, Emoji },
   data() {
     return {
-      inputSkill: ""
+      inputSkill: "",
+      emojis: [
+        "smile-beam",
+        "meh",
+        "tired",
+        "angry",
+        "frown",
+        "laugh-beam",
+        "grin-beam-sweat",
+        "surprise",
+        "sad-cry"
+      ],
+      status: "meh",
+      emojiShow: false
     };
   },
   methods: {
@@ -84,27 +117,65 @@ export default {
     },
     delTag(i) {
       this.user.skill.splice(i, 1);
+    },
+    changeState(s) {
+      this.user.status = s;
+    },
+    async update() {
+      try {
+        await fetch(
+          `https://us-central1-status-a7b18.cloudfunctions.net/user/${
+            this.user.id
+          }`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(this.user)
+          }
+        );
+
+        this.$toast.open({
+          duration: 2000,
+          message: "更新が完了しました",
+          position: "is-top",
+          type: "is-success"
+        });
+      } catch (err) {
+        this.$toast.open({
+          duration: 2000,
+          message: "更新が失敗しました",
+          position: "is-top",
+          type: "is-danger"
+        });
+        console.log(err);
+      }
     }
   },
   async beforeDestroy() {
-    try {
-      await fetch(
-        `https://us-central1-status-a7b18.cloudfunctions.net/user/${
-          this.user.id
-        }`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.user)
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    this.update();
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.collapse-parent {
+  position: relative;
+}
+.selecter {
+  position: absolute;
+  width: 320px;
+  top: 100%;
+  left: calc(-160px + 100%);
+  z-index: 100;
+}
+
+.show-enter-active,
+.show-leave-active {
+  transition: all 0.1s ease-in-out;
+}
+.show-enter,
+.show-leave-to {
+  opacity: 0;
+}
 </style>
 
