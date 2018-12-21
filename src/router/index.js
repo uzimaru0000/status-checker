@@ -1,17 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from '../firebase';
-import HelloWorld from '@/components/HelloWorld'
 import Edit from '@/components/Status/Edit'
 import Login from '@/components/Auth/Login'
-import SignUp from '@/components/Auth/SignUp'
 import Group from '@/components/Group/Group'
 import Select from '@/components/Group/Select'
 import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
 import Status from '@/components/Status/Status'
 import NotFound from '@/components/NotFound'
-import Emoji from '@/components/Status/Emoji'
+import HomePage from '@/components/HomePage'
 
 
 Vue.use(Router)
@@ -21,8 +19,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'HomePage',
+      component: HomePage
     },
     {
       path: '/edit',
@@ -33,14 +31,9 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
+      path: '/signin',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/signup',
-      name: 'SignUp',
-      component: SignUp
     },
     {
       path: '*',

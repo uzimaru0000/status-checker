@@ -14,8 +14,7 @@
     <div class="is-vertical-center">
       <p style="margin-bottom:10px;">the link you followed may be broken or have expired.</p>
       <div class="content is-vertical-center">
-        <router-link to="/signup">Sign Up</router-link>
-        <router-link to="/login">Log In</router-link>
+        <router-link to="/signin">Sign In</router-link>
         <router-link to="/group">Go to groups page</router-link>
       </div>
     </div>
