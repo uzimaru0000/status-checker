@@ -1,4 +1,5 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 const model = require('./model');
@@ -14,6 +15,16 @@ exports.createUser = functions.auth.user().onCreate(user => {
     email: user.email,
     skill: []
   });
+});
+
+exports.deleteUser = functions.auth.user().onDelete(async data => {
+  const user = await model.getUser(data.uid);
+  await Promise.all(user.joinedGroups.map(x => {
+    return model.app.firestore().collection('group').doc(x).update({
+      members: admin.firestore.FieldValue.arrayRemove(user.id)
+    });
+  }));
+  await model.app.firestore().collection('users').doc(user.id).delete();
 });
 
 // GroupのRequest処理
