@@ -9,6 +9,7 @@
         class="column is-full"
       />
     </transition-group>
+    <b-loading v-else :is-full-page="true" :active="true"/>
     <b-field class="input-field has-background-light" grouped>
       <div class="control is-expanded" :class="{'is-loading': isSending}">
         <textarea
