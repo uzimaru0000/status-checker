@@ -11,6 +11,7 @@ import Create from '@/components/Group/Create'
 import Join from '@/components/Group/Join'
 import Status from '@/components/Status/Status'
 import NotFound from '@/components/NotFound'
+import Emoji from '@/components/Status/Emoji'
 
 
 Vue.use(Router)

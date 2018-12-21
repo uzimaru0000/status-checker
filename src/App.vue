@@ -64,6 +64,9 @@ $danger-invert: findColorInvert($danger);
 $light: #eeeeee;
 $light-invert: findColorInvert($light);
 
+$emoji: rgb(252, 218, 70);
+$emoji-invert: findColorInvert($emoji);
+
 $colors: (
   "white": (
     $white,
@@ -100,6 +103,10 @@ $colors: (
   "danger": (
     $danger,
     $danger-invert
+  ),
+  "emoji": (
+    $emoji,
+    $emoji-invert
   )
 );
 

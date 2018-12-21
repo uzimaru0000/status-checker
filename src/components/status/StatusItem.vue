@@ -9,7 +9,7 @@
       <div class="media-content">
         <div class="content">
           <span class="title is-3">{{ user.name || "Anonymous" }}</span>
-          <b-icon pack="far" icon="smile" size="is-medium"/>
+          <b-icon pack="far" :icon="user.status" size="is-medium"/>
         </div>
         <progress
           class="progress is-small"
