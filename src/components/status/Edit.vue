@@ -89,7 +89,7 @@ export default {
     return {
       inputSkill: "",
       emojis: [
-        "smile-beam",
+        "smile",
         "meh",
         "tired",
         "angry",
