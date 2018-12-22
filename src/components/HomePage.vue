@@ -21,7 +21,11 @@ export default {
   },
   computed: {
     groupURL() {
-      if (this.user.joinedGroups.length > 0) {
+      if (
+        this.user &&
+        this.user.joinedGroups &&
+        this.user.joinedGroups.length > 0
+      ) {
         return `/group/${this.user.joinedGroups[0]}`;
       } else {
         return "/group";

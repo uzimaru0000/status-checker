@@ -64,7 +64,7 @@ export default {
         ).then(x => x.json());
         this.creating = false;
 
-        this.$router.push({ path: `/status/${data.id}` });
+        this.$router.push({ path: `/group/${res.id}` });
       } catch (err) {
         this.creating = false;
         this.$toast.open({

@@ -59,7 +59,8 @@ export default {
           }
         );
         this.join = false;
-        this.$route.push({ path: `/status/${this.id}` });
+        this.$router.push({ path: `/group/${this.id}` });
+        this.$router.push({ path: `/edit` });
       } catch (err) {
         this.join = false;
         this.$toast.open({

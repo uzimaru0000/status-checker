@@ -1,5 +1,5 @@
 <template>
-  <div class="box" @click="emojiShow = emojiShow ? false : emojiShow">
+  <section class="section" @click="emojiShow = emojiShow ? false : emojiShow">
     <div class="columns">
       <div class="column is-one-third">
         <figure class="image is-fullwidth">
@@ -16,9 +16,9 @@
               :message="user.name.length === 0 ? '入力してください' : ''"
             >
               <b-field>
-                <b-input v-model="user.name"></b-input>
+                <b-input v-model="user.name" expanded size="is-medium"></b-input>
                 <div class="collapse-parent">
-                  <button class="button" @click.stop="emojiShow = !emojiShow">
+                  <button class="button is-medium" @click.stop="emojiShow = !emojiShow">
                     <b-icon pack="far" :icon="user.status"></b-icon>
                   </button>
                   <transition name="show">
@@ -75,7 +75,7 @@
     <div class="column">
       <button class="button is-success" @click="update">更新する</button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -97,7 +97,8 @@ export default {
         "laugh-beam",
         "grin-beam-sweat",
         "surprise",
-        "sad-cry"
+        "sad-cry",
+        "grin-squint"
       ],
       status: "meh",
       emojiShow: false
@@ -165,7 +166,7 @@ export default {
   position: absolute;
   width: 320px;
   top: 100%;
-  left: calc(-160px + 100%);
+  left: calc(-320px + 100%);
   z-index: 100;
 }
 
