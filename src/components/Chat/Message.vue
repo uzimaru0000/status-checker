@@ -1,17 +1,25 @@
 <template>
-  <div class="box">
+  <div class="box is-shadowless">
     <div class="media">
-      <div class="media-left">
+      <div v-if="direction === 'left'" class="media-left">
         <figure class="image is-64x64">
           <img class="is-rounded" :src="user.imageURL">
         </figure>
       </div>
       <div class="media-content columns is-multiline">
-        <div class="column is-full">
+        <div class="column is-full" :class="{'has-text-right': direction === 'right'}">
           <span class="title is-5">{{user.name}}</span>
           <span class="subtitle is-6">{{time}}</span>
         </div>
-        <div class="column is-full is-size-5 msg">{{message.message}}</div>
+        <div
+          class="column is-size-5 is-4 msg box"
+          :class="{'has-text-right': direction === 'right', 'right': direction === 'right'}"
+        >{{message.message}}</div>
+      </div>
+      <div v-if="direction === 'right'" class="media-right">
+        <figure class="image is-64x64">
+          <img class="is-rounded" :src="user.imageURL">
+        </figure>
       </div>
     </div>
   </div>
@@ -22,7 +30,11 @@ export default {
   name: "Message",
   props: {
     message: Object,
-    user: Object
+    user: Object,
+    direction: {
+      type: String,
+      default: "left"
+    }
   },
   computed: {
     time() {
@@ -41,5 +53,9 @@ export default {
 .msg {
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.right {
+  margin-left: auto;
 }
 </style>

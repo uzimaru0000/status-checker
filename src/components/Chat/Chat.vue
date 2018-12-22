@@ -10,12 +10,13 @@
         :key="message.date.seconds"
         :message="message"
         :user="message.uid === user.id ? user : bros"
+        :direction="message.uid === user.id ? 'right' : 'left'"
         class="column is-full"
       />
     </transition-group>
     <b-loading v-else :is-full-page="true" :active="true"/>
     <b-field class="input-field has-background-light" grouped ref="inputField">
-      <div class="control is-expanded" :class="{'is-loading': isSending}">
+      <div class="control is-expanded">
         <textarea
           class="textarea has-fixed-size"
           :rows="rows"
@@ -27,7 +28,7 @@
         class="button is-success is-medium"
         :class="{'is-loading': isSending}"
         @click="send"
-      >send</button>
+      >Send</button>
     </b-field>
   </section>
 </template>
@@ -135,11 +136,12 @@ export default {
 
 .show-enter-active,
 .show-leave-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in;
 }
 
 .show-enter,
 .show-leave-to {
-  transform: translateX(100%);
+  transform: translateY(100%);
+  transform: scale(0);
 }
 </style>
