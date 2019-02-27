@@ -1,6 +1,7 @@
 # status-checker
 
-> A Vue.js project
+![](https://github.com/uzimaru0000/status-checker/blob/develop/スクリーンショット%202019-02-27%2011.15.12.png)
+![](https://github.com/uzimaru0000/status-checker/blob/develop/スクリーンショット%202019-02-27%2011.16.46.png)
 
 ## Build Setup
 
